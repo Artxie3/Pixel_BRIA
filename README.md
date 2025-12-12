@@ -149,9 +149,9 @@ cp .env.example .env
 # Run the server
 cd webapp
 uvicorn server:app --reload --port 8000
-```
 
-Open http://localhost:8000 in your browser.
+# Open http://localhost:8000 in your browser
+```
 
 ---
 
