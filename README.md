@@ -22,11 +22,12 @@
 
 ### The Problem
 
-Traditional AI image generators produce "pseudo pixel art" — images that look pixelated but lack the authentic characteristics of real pixel art:
-- ❌ Inconsistent block sizes
-- ❌ Anti-aliasing and gradients within pixels
-- ❌ Too many colors for retro aesthetics
-- ❌ No transparent backgrounds for assets
+Traditional AI image generators produce "pseudo pixel art", images that **look** pixelated but contain unwanted artifacts:
+
+- ❌ **Inconsistent block sizes** — pixels vary in size across the image
+- ❌ **Anti-aliasing and gradients** — smooth transitions where there should be hard edges
+- ❌ **Too many colors** — hundreds of shades instead of limited retro palettes
+- ❌ **No transparency** — backgrounds baked into the image
 
 ### Our Solution: The 3-Stage Pipeline
 
