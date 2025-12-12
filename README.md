@@ -4,16 +4,15 @@
 
 [![FIBO Hackathon](https://img.shields.io/badge/FIBO-Hackathon%202025-6366f1?style=for-the-badge)](https://bria-ai.devpost.com/)
 [![BRIA API](https://img.shields.io/badge/Powered%20by-BRIA%20FIBO-00d4aa?style=for-the-badge)](https://bria.ai/)
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](#license)
 
 ---
 
-## 🏆 Hackathon Submission
+##  Hackathon Submission
 
 **Categories:** 
-- 🥇 **Best JSON-Native or Agentic Workflow** — Full structured prompt pipeline with automated style enforcement
-- 🎨 **Best Controllability** — Precise pixel art style control (8-bit, 16-bit, 32-bit, Modern) with color palette limits
-- 🛠️ **Best New User Experience** — End-to-end professional tool for digital artists and content creators
+-  **Best JSON-Native or Agentic Workflow** — Full structured prompt pipeline with automated style enforcement
+-  **Best Controllability** — Precise pixel art style control (8-bit, 16-bit, 32-bit, Modern) with color palette limits
+-  **Best New User Experience** — End-to-end professional tool for digital artists and content creators
 
 ---
 
