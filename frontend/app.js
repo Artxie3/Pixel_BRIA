@@ -20,7 +20,8 @@ let currentStructuredPrompt = null;
 const imageUrls = {
   pseudo: null,
   perfect: null,
-  nobg: null
+  nobg: null,
+  svg: null
 };
 
 const previewState = {
@@ -492,6 +493,7 @@ document.getElementById("btn-generate").addEventListener("click", async () => {
     imageUrls.pseudo = data.image_url;
     imageUrls.perfect = null;
     imageUrls.nobg = null;
+    imageUrls.svg = null;
     showPreview(previewPseudoEl, data.image_url, "Pseudo pixel art", "pseudo");
     previewPerfectEl.innerHTML = `<div class="empty"><div class="icon">[]</div><div class="title">Waiting for conversion</div><div class="text">Convert to real pixel art to compare side-by-side.</div></div>`;
     // Hide nobg card and reset grid
@@ -527,9 +529,11 @@ document.getElementById("btn-convert").addEventListener("click", async () => {
     if (data.editable_url) {
       lastEditableName = data.editable_png;
       imageUrls.perfect = data.editable_url;
+      imageUrls.svg = data.svg_url || null;
       showPreview(previewPerfectEl, data.editable_url, "Perfect pixel art", "perfect");
     } else if (data.raster_url) {
       imageUrls.perfect = data.raster_url;
+      imageUrls.svg = data.svg_url || null;
       showPreview(previewPerfectEl, data.raster_url, "Perfect pixel art", "perfect");
     } else {
       setStatus("Conversion returned no preview.", true);
@@ -718,9 +722,10 @@ document.getElementById('save-nobg')?.addEventListener('click', async () => {
 // Save all images and JSON as a ZIP file
 document.getElementById('save-all')?.addEventListener('click', async () => {
   const available = [];
-  if (imageUrls.pseudo) available.push({ url: imageUrls.pseudo, type: 'pseudo' });
-  if (imageUrls.perfect) available.push({ url: imageUrls.perfect, type: 'perfect' });
-  if (imageUrls.nobg) available.push({ url: imageUrls.nobg, type: 'nobg' });
+  if (imageUrls.pseudo) available.push({ url: imageUrls.pseudo, type: 'pseudo', ext: 'png' });
+  if (imageUrls.perfect) available.push({ url: imageUrls.perfect, type: 'perfect', ext: 'png' });
+  if (imageUrls.nobg) available.push({ url: imageUrls.nobg, type: 'nobg', ext: 'png' });
+  if (imageUrls.svg) available.push({ url: imageUrls.svg, type: 'vector', ext: 'svg' });
   
   const hasJson = currentStructuredPrompt !== null;
   
@@ -742,10 +747,10 @@ document.getElementById('save-all')?.addEventListener('click', async () => {
     // Add images to ZIP
     for (const img of available) {
       try {
-        setStatus(`Adding ${img.type} image...`);
+        setStatus(`Adding ${img.type} ${img.ext}...`);
         const response = await fetch(img.url);
         const blob = await response.blob();
-        folder.file(`${img.type}.png`, blob);
+        folder.file(`${img.type}.${img.ext}`, blob);
       } catch (err) {
         console.error(`Failed to add ${img.type}:`, err);
       }
