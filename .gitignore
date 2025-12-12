@@ -51,3 +51,6 @@ webapp/outputs/
 # Temp files
 *.tmp
 *.temp
+
+# Ignore deployment guide
+DEPLOYMENT.md
