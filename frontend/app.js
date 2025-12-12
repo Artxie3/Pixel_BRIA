@@ -1,10 +1,6 @@
-// ========================================
-// API Configuration
-// ========================================
-// ⚠️ PRODUCTION: Update this URL to your Render backend URL after deployment
-// Example: "https://bria-pixel-playground.onrender.com"
-// For local development: Leave empty "" to use relative paths
-const API_BASE_URL = ""; // TODO: Set your Render URL here after deployment
+
+
+const API_BASE_URL = "https://pixel-bria.onrender.com"; 
 
 const statusEl = document.getElementById("status");
 const previewPseudoEl = document.getElementById("preview-pseudo");
