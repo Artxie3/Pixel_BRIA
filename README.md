@@ -110,7 +110,9 @@ FIBO Pixel Lab showcases what makes BRIA FIBO unique:
 
 ## 🚀 Live Demo
 
-**Try it now:** [https://fibo-pixel-lab.vercel.app](https://fibo-pixel-lab.vercel.app)
+**Try it now:** [https://pixel-bria.vercel.app](https://pixel-bria.vercel.app)
+
+**Backend API:** [https://bria-pixel-playground-production.up.railway.app](https://bria-pixel-playground-production.up.railway.app)
 
 ### Quick Start
 1. Enter a prompt: *"a brave knight in shining armor"*
