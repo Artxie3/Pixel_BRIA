@@ -112,6 +112,18 @@ except Exception as exc:  # noqa: BLE001
     INIT_ERROR = str(exc)
 
 
+@app.get("/")
+async def root():
+    """Root endpoint - returns API status."""
+    return {"status": "ok", "message": "BRIA Pixel Playground API"}
+
+
+@app.get("/health")
+async def health():
+    """Health check endpoint."""
+    return {"status": "healthy", "storage": is_storage_enabled()}
+
+
 def _ensure_ready():
     """Ensure the playground and storage are initialized."""
     if INIT_ERROR:
