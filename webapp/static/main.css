@@ -99,6 +99,10 @@ body {
   border-radius: 999px;
   cursor: pointer;
   transition: 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .pill.accent {
