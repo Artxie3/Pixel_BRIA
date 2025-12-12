@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+python-dotenv
+requests
+pillow
+numpy
+opencv-python-headless
+scikit-image
+cairosvg
+httpx

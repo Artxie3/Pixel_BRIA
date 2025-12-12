@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BRIA Pixel Playground</title>
+  <link rel="stylesheet" href="./main.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">BR</div>
+      <div>
+        <div class="title">FIBO Pixel Lab</div>
+        <div class="subtitle">Pseudo → Perfect pixel art, BRIA-style</div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="pill">Docs</button>
+      <button class="pill accent">Bria Platform</button>
+    </div>
+  </header>
+
+  <main class="grid">
+    <section class="panel">
+      <label class="field">
+        <div class="label">What's your objective?</div>
+        <textarea id="prompt" placeholder="Describe it here..."></textarea>
+      </label>
+
+      <div class="controls">
+        <div class="control">
+          <div class="label">Style</div>
+          <div class="chips" id="style-chips">
+            <button data-style="8bit">8-bit</button>
+            <button data-style="16bit" class="active">16-bit</button>
+            <button data-style="32bit">32-bit</button>
+            <button data-style="modern">Modern</button>
+          </div>
+        </div>
+        <div class="control">
+          <div class="label">Seed (optional)</div>
+          <input id="seed" type="number" placeholder="Random if empty">
+        </div>
+      </div>
+
+      <div class="actions-row">
+        <button id="btn-generate" class="primary">Generate</button>
+        <button id="btn-convert" class="secondary">Convert to real pixel art</button>
+      </div>
+
+      <div class="actions-row">
+        <button id="btn-remove" class="ghost">Remove background</button>
+      </div>
+
+      <div class="status" id="status"></div>
+
+      <!-- Structured Prompt Section -->
+      <div class="structured-prompt-section" id="structured-prompt-section" style="display: none;">
+        <div class="sp-header" id="sp-header-toggle">
+          <div class="sp-title">
+            <span class="sp-collapse-chevron">›</span>
+            <span>Structured Prompt</span>
+            <span class="sp-info" title="The structured JSON that guides image generation">ⓘ</span>
+          </div>
+          <div class="sp-actions">
+            <button class="sp-toggle-code" id="sp-toggle-code" title="Toggle code view">&lt;/&gt;</button>
+            <button class="sp-copy" id="sp-copy" title="Copy to clipboard">⧉</button>
+          </div>
+        </div>
+        <div class="sp-content">
+          <!-- Tree view (default) -->
+          <div class="sp-tree" id="sp-tree">
+            <div class="sp-category" data-category="general">
+              <div class="sp-category-header">
+                <span class="sp-chevron">›</span>
+                <span>General</span>
+                <span class="sp-count" id="sp-count-general"></span>
+              </div>
+              <div class="sp-category-content" id="sp-general"></div>
+            </div>
+            <div class="sp-category" data-category="objects">
+              <div class="sp-category-header">
+                <span class="sp-chevron">›</span>
+                <span>Objects</span>
+                <span class="sp-count" id="sp-count-objects"></span>
+              </div>
+              <div class="sp-category-content" id="sp-objects"></div>
+            </div>
+            <div class="sp-category" data-category="lighting">
+              <div class="sp-category-header">
+                <span class="sp-chevron">›</span>
+                <span>Lighting</span>
+                <span class="sp-count" id="sp-count-lighting"></span>
+              </div>
+              <div class="sp-category-content" id="sp-lighting"></div>
+            </div>
+            <div class="sp-category" data-category="aesthetics">
+              <div class="sp-category-header">
+                <span class="sp-chevron">›</span>
+                <span>Aesthetics</span>
+                <span class="sp-count" id="sp-count-aesthetics"></span>
+              </div>
+              <div class="sp-category-content" id="sp-aesthetics"></div>
+            </div>
+          </div>
+          <!-- Code view (hidden by default) -->
+          <div class="sp-code" id="sp-code" style="display: none;">
+            <pre id="sp-json"></pre>
+          </div>
+        </div>
+        <div class="sp-footer">
+          <span class="sp-word-count" id="sp-word-count">0 Words</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel preview">
+      <div class="preview-header">
+        <div>
+          <div class="label">Preview</div>
+          <div class="small">Step through: pseudo → perfect → background removed.</div>
+        </div>
+        <button class="tag save-all-tag" id="save-all" title="Save all images and JSON">▼ Save All</button>
+      </div>
+      <div class="preview-grid" id="preview-grid">
+        <div class="preview-card pseudo-card">
+          <div class="collapsed-label">Pseudo</div>
+          <div class="card-header">
+            <button class="collapse pseudo-toggle" data-collapse="pseudo">Pseudo pixel art</button>
+            <div class="card-actions">
+              <input type="range" class="zoom-slider" id="zoom-slider-pseudo" data-zoom-target="pseudo" min="0.25" max="15" step="0.25" value="1">
+              <button class="save-btn" id="save-pseudo" title="Save image">▼</button>
+            </div>
+          </div>
+          <div class="preview-body" id="preview-pseudo">
+            <div class="empty">
+              <div class="icon">▢▢</div>
+              <div class="title">Waiting for generation</div>
+              <div class="text">Generate on the left to see the pseudo output.</div>
+            </div>
+          </div>
+        </div>
+        <div class="preview-card perfect-card">
+          <div class="collapsed-label">Perfect</div>
+          <div class="card-header">
+            <div class="header-left">
+              <button class="collapse perfect-toggle" data-collapse="perfect">Perfect pixel art</button>
+            </div>
+            <div class="card-actions">
+              <input type="range" class="zoom-slider" id="zoom-slider-perfect" data-zoom-target="perfect" min="0.25" max="32" step="0.25" value="1">
+              <button class="save-btn" id="save-perfect" title="Save image">▼</button>
+            </div>
+          </div>
+          <div class="preview-body" id="preview-perfect">
+            <div class="empty">
+              <div class="icon">▢▢</div>
+              <div class="title">Waiting for conversion</div>
+              <div class="text">Convert to real pixel art to compare side-by-side.</div>
+            </div>
+          </div>
+        </div>
+        <div class="preview-card nobg-card" id="nobg-card" style="display: none;">
+          <div class="collapsed-label">No BG</div>
+          <div class="card-header">
+            <div class="header-left">
+              <button class="collapse nobg-toggle" data-collapse="nobg">No background</button>
+            </div>
+            <div class="card-actions">
+              <input type="range" class="zoom-slider" id="zoom-slider-nobg" data-zoom-target="nobg" min="0.25" max="32" step="0.25" value="1">
+              <button class="save-btn" id="save-nobg" title="Save image">▼</button>
+            </div>
+          </div>
+          <div class="preview-body" id="preview-nobg">
+            <div class="empty">
+              <div class="icon">▢▢</div>
+              <div class="title">Waiting for background removal</div>
+              <div class="text">Remove background after converting.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
