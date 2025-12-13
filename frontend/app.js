@@ -1,6 +1,6 @@
 
 
-const API_BASE_URL = "https://pixel-bria.onrender.com"; 
+const API_BASE_URL = "https://bria-pixel-playground-production.up.railway.app"; 
 
 const statusEl = document.getElementById("status");
 const previewPseudoEl = document.getElementById("preview-pseudo");
