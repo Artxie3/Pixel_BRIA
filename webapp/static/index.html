@@ -27,11 +27,15 @@
   </header>
 
   <main class="grid">
-    <section class="panel">
-      <label class="field">
-        <div class="label">What’s your objective?</div>
-        <textarea id="prompt" placeholder="Describe it here..."></textarea>
-      </label>
+    <section class="panel prompt-panel">
+      <div class="collapsed-label">Prompt Panel</div>
+      <div class="prompt-header">
+        <button class="collapse prompt-toggle" id="prompt-collapse-btn" data-collapse="prompt" title="Click to minimize">Prompt Panel</button>
+      </div>
+      <div class="prompt-content">
+        <label class="field">
+          <textarea id="prompt" placeholder="Describe it here..."></textarea>
+        </label>
 
       <div class="controls">
         <div class="control">
@@ -118,6 +122,7 @@
           <span class="sp-word-count" id="sp-word-count">0 Words</span>
         </div>
       </div>
+      </div>
     </section>
 
     <section class="panel preview">
@@ -132,7 +137,7 @@
         <div class="preview-card pseudo-card">
           <div class="collapsed-label">Pseudo</div>
           <div class="card-header">
-            <button class="collapse pseudo-toggle" data-collapse="pseudo">Pseudo pixel art</button>
+            <button class="collapse pseudo-toggle" data-collapse="pseudo" title="Click to minimize">Pseudo pixel art</button>
             <div class="card-actions">
               <input type="range" class="zoom-slider" id="zoom-slider-pseudo" data-zoom-target="pseudo" min="0.25" max="15" step="0.25" value="1">
               <button class="save-btn" id="save-pseudo" title="Save image">▼</button>
@@ -150,7 +155,7 @@
           <div class="collapsed-label">Perfect</div>
           <div class="card-header">
             <div class="header-left">
-              <button class="collapse perfect-toggle" data-collapse="perfect">Perfect pixel art</button>
+              <button class="collapse perfect-toggle" data-collapse="perfect" title="Click to minimize">Perfect pixel art</button>
             </div>
             <div class="card-actions">
               <input type="range" class="zoom-slider" id="zoom-slider-perfect" data-zoom-target="perfect" min="0.25" max="32" step="0.25" value="1">

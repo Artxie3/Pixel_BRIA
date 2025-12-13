@@ -1,6 +1,6 @@
 
 
-const API_BASE_URL = "https://bria-pixel-playground-production.up.railway.app"; 
+const API_BASE_URL = "https://pixel-bria.onrender.com"; 
 
 const statusEl = document.getElementById("status");
 const previewPseudoEl = document.getElementById("preview-pseudo");
@@ -9,6 +9,8 @@ const previewNobgEl = document.getElementById("preview-nobg");
 const previewGrid = document.getElementById("preview-grid");
 const promptEl = document.getElementById("prompt");
 const seedEl = document.getElementById("seed");
+const gridEl = document.querySelector(".grid");
+const promptPanelEl = document.querySelector(".prompt-panel");
 
 let lastImageName = null;
 let lastEditableName = null;
@@ -583,6 +585,14 @@ document.getElementById("btn-remove").addEventListener("click", async () => {
   }
 });
 
+function setPromptCollapsed(collapsed) {
+  if (!promptPanelEl) return;
+  promptPanelEl.classList.toggle("collapsed", collapsed);
+  if (gridEl) {
+    gridEl.classList.toggle("prompt-collapsed", collapsed);
+  }
+}
+
 function updateGridCollapse() {
   const pseudoCollapsed = document.querySelector(".pseudo-card")?.classList.contains("collapsed");
   const perfectCollapsed = document.querySelector(".perfect-card")?.classList.contains("collapsed");
@@ -609,8 +619,16 @@ function updateGridCollapse() {
 
 document.querySelectorAll(".collapse").forEach((btn) => {
   btn.addEventListener("click", () => {
-    const card = btn.closest(".preview-card");
     const collapseType = btn.dataset.collapse;
+    if (collapseType === "prompt") {
+      const next = !promptPanelEl?.classList.contains("collapsed");
+      setPromptCollapsed(!!next);
+      return;
+    }
+
+    const card = btn.closest(".preview-card");
+    if (!card) return;
+
     if (card.classList.contains("collapsed")) {
       card.classList.remove("collapsed");
       if (collapseType === "pseudo") btn.textContent = "Pseudo pixel art";
@@ -629,6 +647,12 @@ document.querySelectorAll(".collapse").forEach((btn) => {
 // Click on collapsed label to expand
 document.querySelectorAll(".collapsed-label").forEach((label) => {
   label.addEventListener("click", () => {
+    const promptPanel = label.closest(".prompt-panel");
+    if (promptPanel) {
+      setPromptCollapsed(false);
+      return;
+    }
+
     const card = label.closest(".preview-card");
     if (card.classList.contains("collapsed")) {
       card.classList.remove("collapsed");
