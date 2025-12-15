@@ -179,7 +179,7 @@ uvicorn server:app --reload --port 8000
 
 ## 🎬 Demo Video
 
-[![FIBO Pixel Lab Demo](https://img.youtube.com/vi/YOUR_VIDEO_ID/maxresdefault.jpg)](https://youtu.be/yuvAFKNnnL0)
+[![FIBO Pixel Lab Demo](https://img.youtube.com/vi/yuvAFKNnnL0/maxresdefault.jpg)](https://youtu.be/yuvAFKNnnL0)
 
 *Click to watch the 2-minute demo*
 
